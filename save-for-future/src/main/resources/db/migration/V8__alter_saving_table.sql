@@ -1,0 +1,3 @@
+ALTER TABLE saving DROP CONSTRAINT saving_un;
+ALTER TABLE saving DROP CONSTRAINT saving_fk;
+ALTER TABLE saving DROP COLUMN customerid;
