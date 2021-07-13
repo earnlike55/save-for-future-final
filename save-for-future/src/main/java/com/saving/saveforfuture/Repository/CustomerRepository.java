@@ -1,7 +1,10 @@
 package com.saving.saveforfuture.Repository;
 
 import com.saving.saveforfuture.Mapper.CustomerMapper;
+import com.saving.saveforfuture.Mapper.ProfileMapper;
 import com.saving.saveforfuture.model.CustomerProfileDetail;
+import com.saving.saveforfuture.model.Profile;
+import com.saving.saveforfuture.model.ProfileResponse;
 import com.saving.saveforfuture.model.SavingDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +49,30 @@ public class CustomerRepository {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource()
                 .addValue("customerid",customerId);
 
-        System.out.println(sql.toString());
-        System.out.println(customerId);
 
         return namedParameterJdbcTemplate.query(sql.toString(),mapSqlParameterSource,new CustomerMapper());
 
+    }
+
+    public List<Profile> getCustomerProfile(String customerId){
+        StringJoiner sql = new StringJoiner(" ")
+                .add("SELECT")
+                .add("a.customername,a.age,b.bankid,b.bankname,a.gender,a.email,b.bankaccno")
+                .add("FROM")
+                .add("customer a")
+                .add("LEFT")
+                .add("JOIN")
+                .add("bank b")
+                .add("ON")
+                .add("a.customerid=b.customerid")
+                .add("WHERE")
+                .add("a.customerid=:customerid")
+                .add("");
+
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource()
+                .addValue("customerid",customerId);
+
+        return namedParameterJdbcTemplate.query(sql.toString(),mapSqlParameterSource,new ProfileMapper());
     }
 
 

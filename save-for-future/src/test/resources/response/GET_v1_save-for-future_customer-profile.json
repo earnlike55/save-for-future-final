@@ -1,0 +1,14 @@
+{
+  "customerName": "John",
+  "age": 20,
+  "bankId": "A1",
+  "bankName": null,
+  "bankAccNo": null,
+  "email": "aabb",
+  "monthlyIncome": 10000,
+  "monthlyExpense": 5000,
+  "memberNo": 2,
+  "tax": 500,
+  "suggestAmt": 1650000,
+  "gender": "male"
+}

@@ -1,6 +1,7 @@
 package com.saving.saveforfuture.Repository;
 
 import com.saving.saveforfuture.model.CustomerProfileDetail;
+import com.saving.saveforfuture.model.Profile;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,13 +35,13 @@ public class CustomerRepositoryTest {
     @Before
     public void before(){
         String sql = "INSERT INTO customer"+
-                "(customerid,email,dob,age,memberno,monthlyincome,monthlyexpense,tax,ageofretirement,\"password\",gender,savingid,expectage)"+
+                "(customerid,email,dob,age,memberno,monthlyincome,monthlyexpense,tax,ageofretirement,\"password\",gender,savingid,expectage,customername)"+
                 "VALUES"+
-                "('002','aacc','1999-06-06',21,1,50000,3000,1000,60,'123456','male','A2',90)";
+                "('002','aa@hotmail.com','1999-06-06',21,1,50000,3000,1000,60,'123456','male','A2',90,'Sarah')";
         String sql2 = "INSERT INTO bank"+
-                "(bankid,customerid,accounttype,balance,interest)"+
+                "(bankid,customerid,accounttype,balance,interest,bankname,bankaccno)"+
                 "VALUES"+
-                "('A2','002','deposit',20000,300)";
+                "('A2','002','deposit',20000,300,'KrungThai','123-456')";
         String sql3 = "INSERT INTO saving"+
                 "(savingid,monthlysave,createdatetime,customerid)"+
                 "VALUES"+
@@ -61,6 +62,19 @@ public class CustomerRepositoryTest {
         assertEquals(0, check.get(0).getBalance().compareTo(new BigDecimal(20000)));
         assertThat(check.get(0).getExpectAge(),Matchers.equalTo(90));
         assertThat(check.get(0).getAgeOfRetirement(),Matchers.equalTo(60));
+    }
+
+    @Test
+    public void getCustomerProfileSuccess(){
+        List<Profile> profileList = customerRepository.getCustomerProfile("002");
+        assertThat(profileList.size(),Matchers.equalTo(1));
+        assertThat(profileList.get(0).getCustomerName(),Matchers.equalTo("Sarah"));
+        assertThat(profileList.get(0).getAge(),Matchers.equalTo(21));
+        assertThat(profileList.get(0).getBankId(),Matchers.equalTo("A2"));
+        assertThat(profileList.get(0).getBankName(),Matchers.equalTo("KrungThai"));
+        assertThat(profileList.get(0).getGender(),Matchers.equalTo("male"));
+        assertThat(profileList.get(0).getEmail(),Matchers.equalTo("aa@hotmail.com"));
+        assertThat(profileList.get(0).getBankAccNo(),Matchers.equalTo("123-456"));
     }
 
     @Test

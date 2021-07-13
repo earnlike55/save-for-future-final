@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saving.saveforfuture.controller.CustomerController;
+import com.saving.saveforfuture.model.ProfileResponse;
 import com.saving.saveforfuture.model.SavingResponse;
 import com.saving.saveforfuture.service.CustomerService;
 import org.apache.coyote.Response;
@@ -56,6 +57,23 @@ public class CustomerControllerTest {
         mockMvc.perform(
                 get(uriComponents.toString())
                 .param("customerId","customerId"))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void getCustomerDetailSuccess()throws Exception{
+        String url = "/v1/save-for-future/customer-profile";
+        UriComponents uriComponents = UriComponentsBuilder.fromUriString(url).build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Resource expectedResource = new ClassPathResource("response/GET_v1_save-for-future_customer-profile.json");
+        ProfileResponse expected = objectMapper.readValue(expectedResource.getFile(), new TypeReference<ProfileResponse>() {
+        });
+        when(customerService.getCustomerProfile(any())).thenReturn(expected);
+        mockMvc.perform(
+                get(uriComponents.toString())
+                        .param("customerId","customerId"))
                 .andDo(print())
                 .andExpect(status().isOk());
 

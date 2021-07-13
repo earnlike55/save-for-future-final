@@ -1,5 +1,6 @@
 package com.saving.saveforfuture.controller;
 
+import com.saving.saveforfuture.model.ProfileResponse;
 import com.saving.saveforfuture.model.SavingResponse;
 import com.saving.saveforfuture.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,5 +27,14 @@ public class CustomerController {
                 .status(HttpStatus.OK)
                 .body(customerService.getCustomerFinancialDetail(customerId));
     }
+
+    @GetMapping("/v1/save-for-future/customer-profile")
+    public ResponseEntity<ProfileResponse> getCustomerProfileDetail(
+            @RequestParam(required = false) String customerId){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerService.getCustomerProfile(customerId));
+    }
+
 
 }
