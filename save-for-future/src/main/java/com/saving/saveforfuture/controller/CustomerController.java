@@ -22,7 +22,6 @@ public class CustomerController {
     public ResponseEntity<SavingResponse> getCustomerFinancialDetail(
             @RequestParam(required = false) String customerId
             ){
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(customerService.getCustomerFinancialDetail(customerId));

@@ -50,7 +50,7 @@ public class CustomerService {
     }
 
     public BigDecimal calculateSuggestAmount(int expectAge, BigDecimal expense, int retireAge,BigDecimal tax) {
-        return BigDecimal.valueOf(expectAge - retireAge).multiply(expense.add(tax));
+        return BigDecimal.valueOf(expectAge - retireAge).multiply((expense.add(tax)).multiply(new BigDecimal(12)));
     }
 
     public BigDecimal calculateRemainingAmount(BigDecimal current, BigDecimal suggest) {

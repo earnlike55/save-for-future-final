@@ -1,0 +1,16 @@
+{
+  "monthlyIncome": 12300,
+  "monthlyExpense": 3000,
+  "tax": 300,
+  "suggestAmount": 99000,
+  "remainingAmount": 69000,
+  "remainingPercent": 69.60000,
+  "savePercent": 30.30000,
+  "savingTransactions": [
+    {
+      "savingId": "A3",
+      "createdDateTime": "1999-06-06",
+      "depositAmount": 4000
+    }
+  ]
+}
