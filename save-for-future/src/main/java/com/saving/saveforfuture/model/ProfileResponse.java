@@ -20,5 +20,5 @@ public class ProfileResponse {
     private BigDecimal monthlyExpense;
     private int memberNo;
     private BigDecimal tax;
-    private BigDecimal suggestAmt;
+    private BigDecimal suggestMonthly;
 }

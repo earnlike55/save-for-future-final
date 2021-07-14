@@ -28,9 +28,9 @@ public class BankLinkRepositoryTest {
     @Before
     public void before(){
         String sql = "INSERT INTO customer"+
-                "(customerid,email,dob,age,memberno,monthlyincome,monthlyexpense,tax,ageofretirement,\"password\",gender,savingid,expectage,customername,bankaccno)"+
+                "(customerid,email,dob,age,memberno,monthlyincome,monthlyexpense,tax,ageofretirement,\"password\",gender,savingid,expectage,customername)"+
                 "VALUES"+
-                "('002','aa@hotmail.com','1999-06-06',21,1,50000,3000,1000,60,'123456','male','A2',90,'Sarah','123-45678')";
+                "('002','aa@hotmail.com','1999-06-06',21,1,50000,3000,1000,60,'123456','male','A2',90,'Sarah')";
         String sql2 = "INSERT INTO bank"+
                 "(bankid,customerid,accounttype,balance,interest,bankname,bankaccno)"+
                 "VALUES"+
@@ -83,7 +83,8 @@ public class BankLinkRepositoryTest {
     }
 
     @Test
-    public void updateBankSucces(){
-
+    public void updateBankSuccess(){
+        int check = bankLinkRepository.updateBankDetail("002","123-45678");
+        assertThat(check,Matchers.equalTo(1));
     }
 }

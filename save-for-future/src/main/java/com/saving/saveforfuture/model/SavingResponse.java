@@ -15,6 +15,7 @@ public class SavingResponse {
     private BigDecimal tax;
     private BigDecimal suggestAmount;
     private BigDecimal remainingAmount;
+    private BigDecimal suggestMonthly;
     private BigDecimal remainingPercent;
     private BigDecimal savePercent;
     private List<SavingTransaction> savingTransactions;

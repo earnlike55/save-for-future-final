@@ -35,6 +35,9 @@ public class CustomerService {
                         (calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
                                 customerProfileDetails.get(0).getMonthlyExpense(),
                                 customerProfileDetails.get(0).getAgeOfRetirement()))))
+                .setSuggestMonthly(calculateMonthlySave(calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
+                        customerProfileDetails.get(0).getMonthlyExpense(),customerProfileDetails.get(0).getAgeOfRetirement()),
+                        customerProfileDetails.get(0).getExpectAge(),customerProfileDetails.get(0).getAgeOfRetirement()))
                 .setRemainingPercent(calculateRemainingAmountPercent(customerProfileDetails.get(0).getBalance(),
                         calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
                                 customerProfileDetails.get(0).getMonthlyExpense(),
@@ -62,9 +65,9 @@ public class CustomerService {
                 .setMonthlyIncome(customerProfileDetails.get(0).getMonthlyIncome())
                 .setMonthlyExpense(customerProfileDetails.get(0).getMonthlyExpense())
                 .setMemberNo(customerProfileDetails.get(0).getMemberno())
-                .setSuggestAmt(calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
-                        customerProfileDetails.get(0).getMonthlyExpense(),
-                        customerProfileDetails.get(0).getAgeOfRetirement()));
+                .setSuggestMonthly(calculateMonthlySave(calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
+                        customerProfileDetails.get(0).getMonthlyExpense(),customerProfileDetails.get(0).getAgeOfRetirement()),
+                        customerProfileDetails.get(0).getExpectAge(),customerProfileDetails.get(0).getAgeOfRetirement()));
         return profileResponse;
 
     }
@@ -96,6 +99,10 @@ public class CustomerService {
 
     public BigDecimal calculateRemainingAmount(BigDecimal current, BigDecimal suggest) {
         return suggest.subtract(current);
+    }
+
+    public BigDecimal calculateMonthlySave(BigDecimal suggest,int expectAge,int retireAge){
+        return suggest.divide(BigDecimal.valueOf(expectAge-retireAge).multiply(new BigDecimal(12)));
     }
 
     public BigDecimal calculateRemainingAmountPercent(BigDecimal current, BigDecimal suggest) {
