@@ -57,7 +57,7 @@ public class CustomerRepository {
     public List<Profile> getCustomerProfile(String customerId){
         StringJoiner sql = new StringJoiner(" ")
                 .add("SELECT")
-                .add("a.customername,a.age,b.bankid,b.bankname,a.gender,a.email,b.bankaccno")
+                .add("a.customername,a.age,a.gender,a.email,a.bankaccno,b.bankname,b.bankid")
                 .add("FROM")
                 .add("customer a")
                 .add("LEFT")
@@ -65,6 +65,8 @@ public class CustomerRepository {
                 .add("bank b")
                 .add("ON")
                 .add("a.customerid=b.customerid")
+                .add("AND")
+                .add("a.bankaccno=b.bankaccno")
                 .add("WHERE")
                 .add("a.customerid=:customerid")
                 .add("");

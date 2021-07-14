@@ -1,5 +1,6 @@
 package com.saving.saveforfuture.service;
 
+import com.saving.saveforfuture.Repository.BankLinkRepository;
 import com.saving.saveforfuture.Repository.CustomerRepository;
 import com.saving.saveforfuture.Repository.SavingRepository;
 import com.saving.saveforfuture.model.*;
@@ -18,6 +19,8 @@ public class CustomerService {
     private CustomerRepository customerRepository;
     @Autowired
     private SavingRepository savingRepository;
+    @Autowired
+    private BankLinkRepository bankLinkRepository;
 
     public SavingResponse getCustomerFinancialDetail(String customerId) {
         List<CustomerProfileDetail> customerProfileDetails = customerRepository.getCustomerFinancialDetail(customerId);
@@ -25,21 +28,20 @@ public class CustomerService {
         SavingResponse savingResponse = new SavingResponse();
         savingResponse.setMonthlyIncome(customerProfileDetails.get(0).getMonthlyIncome())
                 .setMonthlyExpense(customerProfileDetails.get(0).getMonthlyExpense())
-                .setTax(customerProfileDetails.get(0).getTax())
                 .setSuggestAmount(calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
                         customerProfileDetails.get(0).getMonthlyExpense(),
-                        customerProfileDetails.get(0).getAgeOfRetirement(), customerProfileDetails.get(0).getTax()))
+                        customerProfileDetails.get(0).getAgeOfRetirement()))
                 .setRemainingAmount(calculateRemainingAmount(customerProfileDetails.get(0).getBalance(),
                         (calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
                                 customerProfileDetails.get(0).getMonthlyExpense(),
-                                customerProfileDetails.get(0).getAgeOfRetirement(), customerProfileDetails.get(0).getTax()))))
+                                customerProfileDetails.get(0).getAgeOfRetirement()))))
                 .setRemainingPercent(calculateRemainingAmountPercent(customerProfileDetails.get(0).getBalance(),
                         calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
                                 customerProfileDetails.get(0).getMonthlyExpense(),
-                                customerProfileDetails.get(0).getAgeOfRetirement(), customerProfileDetails.get(0).getTax())))
+                                customerProfileDetails.get(0).getAgeOfRetirement())))
                 .setSavePercent(calculateDepositAmountPercent(customerProfileDetails.get(0).getBalance(),
                         calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
-                                customerProfileDetails.get(0).getMonthlyExpense(), customerProfileDetails.get(0).getAgeOfRetirement(), customerProfileDetails.get(0).getTax())))
+                                customerProfileDetails.get(0).getMonthlyExpense(), customerProfileDetails.get(0).getAgeOfRetirement())))
                 .setSavingTransactions(mapToSavingTransaction(savingDetails));
 
 
@@ -53,24 +55,43 @@ public class CustomerService {
         profileResponse.setCustomerName(profile.get(0).getCustomerName())
                 .setBankAccNo(profile.get(0).getBankAccNo())
                 .setAge(profile.get(0).getAge())
-                .setBankId(profile.get(0).getBankId())
-                .setBankName(profile.get(0).getBankName())
+                .setBankName(profile.get(0).getBankAccNo() == null ? null : profile.get(0).getBankName())
                 .setGender(profile.get(0).getGender())
                 .setEmail(profile.get(0).getEmail())
+                .setBankId(profile.get(0).getBankId())
                 .setMonthlyIncome(customerProfileDetails.get(0).getMonthlyIncome())
                 .setMonthlyExpense(customerProfileDetails.get(0).getMonthlyExpense())
                 .setMemberNo(customerProfileDetails.get(0).getMemberno())
-                .setTax(customerProfileDetails.get(0).getTax())
                 .setSuggestAmt(calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
                         customerProfileDetails.get(0).getMonthlyExpense(),
-                        customerProfileDetails.get(0).getAgeOfRetirement(),
-                        customerProfileDetails.get(0).getTax()));
+                        customerProfileDetails.get(0).getAgeOfRetirement()));
         return profileResponse;
 
     }
 
-    public BigDecimal calculateSuggestAmount(int expectAge, BigDecimal expense, int retireAge, BigDecimal tax) {
-        return BigDecimal.valueOf(expectAge - retireAge).multiply((expense.add(tax)).multiply(new BigDecimal(12)));
+    public BankLinkResponse patchBankDetail(String email,String bankAccNo){
+       String CusId = bankLinkRepository.getCustomerIdFromEmail(email);
+        String bankAccount = bankLinkRepository.getCustomerBankAccNo(bankAccNo);
+        BankLinkResponse bankLinkResponse = new BankLinkResponse();
+        if(CusId == null || bankAccount == null )
+        {
+            bankLinkResponse
+                    .setStatus(false)
+                    .setDescription("No such email or Account number exist");
+        }
+        else{
+            bankLinkResponse
+                    .setDescription("Success")
+                    .setStatus(true);
+            bankLinkRepository.updateBankDetail(CusId,bankAccNo);
+
+        }
+        return bankLinkResponse;
+
+   }
+
+    public BigDecimal calculateSuggestAmount(int expectAge, BigDecimal expense, int retireAge) {
+        return BigDecimal.valueOf(expectAge - retireAge).multiply((expense).multiply(new BigDecimal(12)));
     }
 
     public BigDecimal calculateRemainingAmount(BigDecimal current, BigDecimal suggest) {

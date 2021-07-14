@@ -44,7 +44,6 @@ public class CustomerServiceTest {
                 .setMonthlyExpense(new BigDecimal(2000))
                 .setMonthlyIncome(new BigDecimal(30000))
                 .setMemberno(2)
-                .setTax(new BigDecimal(300))
                 .setBalance(new BigDecimal(50000))
                 .setExpectAge(90)
                 .setAgeOfRetirement(60);
@@ -62,12 +61,11 @@ public class CustomerServiceTest {
         savingResponseTest = customerService.getCustomerFinancialDetail("001");
         assertEquals(0,savingResponseTest.getMonthlyExpense().compareTo(new BigDecimal(2000)));
         assertEquals(0,savingResponseTest.getMonthlyIncome().compareTo(new BigDecimal(30000)));
-        assertEquals(0,savingResponseTest.getTax().compareTo(new BigDecimal(300)));
-        assertEquals(0,savingResponseTest.getSuggestAmount().compareTo(new BigDecimal(828000)));
-        assertEquals(0,savingResponseTest.getRemainingAmount().compareTo(new BigDecimal(778000)));
+        assertEquals(0,savingResponseTest.getSuggestAmount().compareTo(new BigDecimal(720000)));
+        assertEquals(0,savingResponseTest.getRemainingAmount().compareTo(new BigDecimal(670000)));
 
-        assertEquals(0,savingResponseTest.getRemainingPercent().compareTo(new BigDecimal("93.90000")));
-        assertEquals(0,savingResponseTest.getSavePercent().compareTo(new BigDecimal(6.00000)));
+        assertEquals(0,savingResponseTest.getRemainingPercent().compareTo(new BigDecimal("93.00000")));
+        assertEquals(0,savingResponseTest.getSavePercent().compareTo(new BigDecimal("6.90000")));
         assertThat(savingResponseTest.getSavingTransactions().get(0).getSavingId(),Matchers.equalTo("A2"));
         assertEquals(0,savingResponseTest.getSavingTransactions().get(0).getCreatedDateTime().compareTo(Date.valueOf("1999-05-05")));
         assertEquals(0,savingResponseTest.getSavingTransactions().get(0).getDepositAmount().compareTo(new BigDecimal(3000)));
@@ -80,7 +78,6 @@ public class CustomerServiceTest {
                 .setMonthlyExpense(new BigDecimal(2000))
                 .setMonthlyIncome(new BigDecimal(30000))
                 .setMemberno(2)
-                .setTax(new BigDecimal(300))
                 .setBalance(new BigDecimal(50000))
                 .setExpectAge(90)
                 .setAgeOfRetirement(60);
@@ -107,7 +104,11 @@ public class CustomerServiceTest {
         assertThat(profileResponseTest.getBankName(),Matchers.equalTo("KrungThai"));
         assertEquals(0,profileResponseTest.getMonthlyExpense().compareTo(new BigDecimal(2000)));
         assertEquals(0,profileResponseTest.getMonthlyIncome().compareTo(new BigDecimal(30000)));
-        assertEquals(0,profileResponseTest.getTax().compareTo(new BigDecimal(300)));
-        assertEquals(0,profileResponseTest.getSuggestAmt().compareTo(new BigDecimal(828000)));
+        assertEquals(0,profileResponseTest.getSuggestAmt().compareTo(new BigDecimal(720000)));
+    }
+
+    @Test
+    public void patchBankDetailSuccess(){
+
     }
 }

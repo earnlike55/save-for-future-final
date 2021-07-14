@@ -35,13 +35,13 @@ public class CustomerRepositoryTest {
     @Before
     public void before(){
         String sql = "INSERT INTO customer"+
-                "(customerid,email,dob,age,memberno,monthlyincome,monthlyexpense,tax,ageofretirement,\"password\",gender,savingid,expectage,customername)"+
+                "(customerid,email,dob,age,memberno,monthlyincome,monthlyexpense,tax,ageofretirement,\"password\",gender,savingid,expectage,customername,bankaccno)"+
                 "VALUES"+
-                "('002','aa@hotmail.com','1999-06-06',21,1,50000,3000,1000,60,'123456','male','A2',90,'Sarah')";
+                "('002','aa@hotmail.com','1999-06-06',21,1,50000,3000,1000,60,'123456','male','A2',90,'Sarah','123-456')";
         String sql2 = "INSERT INTO bank"+
                 "(bankid,customerid,accounttype,balance,interest,bankname,bankaccno)"+
                 "VALUES"+
-                "('A2','002','deposit',20000,300,'KrungThai','123-456')";
+                "('B2','002','deposit',20000,300,'KrungThai','123-456')";
         String sql3 = "INSERT INTO saving"+
                 "(savingid,monthlysave,createdatetime,customerid)"+
                 "VALUES"+
@@ -70,7 +70,7 @@ public class CustomerRepositoryTest {
         assertThat(profileList.size(),Matchers.equalTo(1));
         assertThat(profileList.get(0).getCustomerName(),Matchers.equalTo("Sarah"));
         assertThat(profileList.get(0).getAge(),Matchers.equalTo(21));
-        assertThat(profileList.get(0).getBankId(),Matchers.equalTo("A2"));
+        assertThat(profileList.get(0).getBankId(),Matchers.equalTo("B2"));
         assertThat(profileList.get(0).getBankName(),Matchers.equalTo("KrungThai"));
         assertThat(profileList.get(0).getGender(),Matchers.equalTo("male"));
         assertThat(profileList.get(0).getEmail(),Matchers.equalTo("aa@hotmail.com"));

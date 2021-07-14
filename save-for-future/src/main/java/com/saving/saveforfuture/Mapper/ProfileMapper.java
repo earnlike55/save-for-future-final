@@ -14,10 +14,10 @@ public class ProfileMapper implements RowMapper<Profile> {
         return new Profile()
                 .setCustomerName(resultSet.getString("customername"))
                 .setAge(resultSet.getInt("age"))
-                .setBankId(resultSet.getString("bankid"))
                 .setBankName(resultSet.getString("bankname"))
                 .setGender(resultSet.getString("gender"))
                 .setEmail(resultSet.getString("email"))
-                .setBankAccNo(resultSet.getString("bankaccno"));
+                .setBankAccNo(resultSet.getString("bankaccno"))
+                .setBankId(resultSet.getString("bankid"));
     }
 }
