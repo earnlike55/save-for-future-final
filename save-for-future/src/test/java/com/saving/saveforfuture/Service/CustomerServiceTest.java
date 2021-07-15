@@ -108,7 +108,7 @@ public class CustomerServiceTest {
         assertThat(profileResponseTest.getBankName(),Matchers.equalTo("KrungThai"));
         assertEquals(0,profileResponseTest.getMonthlyExpense().compareTo(new BigDecimal(2000)));
         assertEquals(0,profileResponseTest.getMonthlyIncome().compareTo(new BigDecimal(30000)));
-        assertEquals(0,profileResponseTest.getSuggestMonthly().compareTo(new BigDecimal(720000)));
+        assertEquals(0,profileResponseTest.getSuggestMonthly().compareTo(new BigDecimal(2000)));
     }
 
     @Test

@@ -12,7 +12,6 @@ import java.util.List;
 public class SavingResponse {
     private BigDecimal monthlyIncome;
     private BigDecimal monthlyExpense;
-    private BigDecimal tax;
     private BigDecimal suggestAmount;
     private BigDecimal remainingAmount;
     private BigDecimal suggestMonthly;

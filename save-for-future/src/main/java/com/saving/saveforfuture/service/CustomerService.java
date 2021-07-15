@@ -1,14 +1,18 @@
 package com.saving.saveforfuture.service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.saving.saveforfuture.Repository.BankLinkRepository;
 import com.saving.saveforfuture.Repository.CustomerRepository;
 import com.saving.saveforfuture.Repository.SavingRepository;
 import com.saving.saveforfuture.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,6 +95,14 @@ public class CustomerService {
         }
         return bankLinkResponse;
 
+   }
+
+   public CustomerUpdateResponse patchCustomerDetail(String customerId,String email,BigDecimal monthlyIncome,BigDecimal monthlyExpense,int memberNo)throws JsonParseException,InvalidFormatException{
+       CustomerUpdateResponse customerUpdateResponse = new CustomerUpdateResponse();
+       customerRepository.pathCustomerDetail(monthlyIncome,monthlyExpense,memberNo,email,customerId);
+        customerUpdateResponse.setDescription("Success");
+        customerUpdateResponse.setStatus(true);
+        return customerUpdateResponse;
    }
 
     public BigDecimal calculateSuggestAmount(int expectAge, BigDecimal expense, int retireAge) {

@@ -1,5 +1,7 @@
 package com.saving.saveforfuture.Repository;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.saving.saveforfuture.Mapper.CustomerMapper;
 import com.saving.saveforfuture.Mapper.ProfileMapper;
 import com.saving.saveforfuture.model.CustomerProfileDetail;
@@ -8,6 +10,7 @@ import com.saving.saveforfuture.model.ProfileResponse;
 import com.saving.saveforfuture.model.SavingDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -75,6 +78,23 @@ public class CustomerRepository {
                 .addValue("customerid",customerId);
 
         return namedParameterJdbcTemplate.query(sql.toString(),mapSqlParameterSource,new ProfileMapper());
+    }
+
+    public int pathCustomerDetail(BigDecimal monthlyIncome,BigDecimal monthlyExpense,int memberNo,String email,String customerId)throws HttpMessageNotReadableException,InvalidFormatException {
+        StringJoiner sql = new StringJoiner(" ")
+                .add("UPDATE")
+                .add("customer")
+                .add("SET")
+                .add("monthlyincome=:monthlyincome,monthlyexpense=:monthlyexpense,memberno=:memberno,email=:email")
+                .add("WHERE")
+                .add("customerid=:customerid");
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource()
+                .addValue("monthlyincome",monthlyIncome)
+                .addValue("monthlyexpense",monthlyExpense)
+                .addValue("memberno",memberNo)
+                .addValue("email",email)
+                .addValue("customerid",customerId);
+        return namedParameterJdbcTemplate.update(sql.toString(),mapSqlParameterSource);
     }
 
 

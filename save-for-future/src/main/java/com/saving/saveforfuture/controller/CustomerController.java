@@ -1,5 +1,9 @@
 package com.saving.saveforfuture.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.saving.saveforfuture.model.CustomerUpdateRequest;
+import com.saving.saveforfuture.model.CustomerUpdateResponse;
 import com.saving.saveforfuture.model.ProfileResponse;
 import com.saving.saveforfuture.model.SavingResponse;
 import com.saving.saveforfuture.service.CustomerService;
@@ -7,11 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
 
 @RestController
 @Validated
@@ -38,5 +42,22 @@ public class CustomerController {
                 .body(customerService.getCustomerProfile(customerId));
     }
 
+    @PatchMapping("/v1/save-for-future/customer-profile-update")
+    public ResponseEntity<CustomerUpdateResponse> updateCustomerProfile(
+            @RequestParam(required  = false) String customerId,
+            @RequestBody CustomerUpdateRequest request)throws JsonParseException,InvalidFormatException {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(customerService.patchCustomerDetail(customerId,
+                            request.getEmail(),
+                            request.getMonthlyIncome(),
+                            request.getMonthlyExpense(),
+                            request.getMemberNo()));
+        }
 
-}
+
+    }
+
+
+
+
