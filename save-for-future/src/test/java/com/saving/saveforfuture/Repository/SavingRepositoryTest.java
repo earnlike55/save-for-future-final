@@ -31,17 +31,17 @@ public class SavingRepositoryTest {
     @Before
     public void before(){
         String sql = "INSERT INTO customer"+
-                "(customerid,email,dob,age,memberno,monthlyincome,monthlyexpense,tax,ageofretirement,\"password\",gender,savingid,expectage)"+
+                "(customerid,email,dob,age,memberno,monthlyincome,monthlyexpense,ageofretirement,\"password\",gender,savingid,expectage)"+
                 "VALUES"+
-                "('002','aacc','1999-06-06',21,1,50000,3000,1000,60,'123456','male','A2',90)";
+                "(002,'aacc','1999-06-06',21,1,50000,3000,60,'123456','male',002,90)";
         String sql2 = "INSERT INTO bank"+
                 "(bankid,customerid,accounttype,balance,interest)"+
                 "VALUES"+
-                "('A2','002','deposit',20000,300)";
+                "(002,002,'deposit',20000,300)";
         String sql3 = "INSERT INTO saving"+
                 "(savingid,monthlysave,createdatetime,customerid)"+
                 "VALUES"+
-                "('A2',3000,'1999-05-05 12:00:00.000','002')";
+                "(002,3000,'1999-05-05 12:00:00.000',002)";
         jdbcTemplate.execute(sql);
         jdbcTemplate.execute(sql2);
         jdbcTemplate.execute(sql3);
@@ -51,11 +51,11 @@ public class SavingRepositoryTest {
     @Test
     public void getSavingDetailSuccess()
     {
-        List<SavingDetail> savingTest = savingRepository.getSavingDetail("002");
+        List<SavingDetail> savingTest = savingRepository.getSavingDetail(002);
         assertThat(savingTest.size(), Matchers.equalTo(1));
         assertEquals(0,savingTest.get(0).getDepositamt().compareTo(new BigDecimal(3000)));
         assertEquals(0,savingTest.get(0).getDateTime().compareTo(Date.valueOf("1999-05-05")));
-        assertThat(savingTest.get(0).getSavingId(),Matchers.equalTo("A2"));
+        assertThat(savingTest.get(0).getSavingId(),Matchers.equalTo(2L));
     }
 
 }

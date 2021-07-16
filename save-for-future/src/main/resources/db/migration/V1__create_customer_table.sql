@@ -1,5 +1,5 @@
 CREATE TABLE customer (
-                                 customerid varchar(30) NOT NULL,
+                                 customerid serial NOT NULL,
                                  email varchar(30) NOT NULL,
                                  dob date NOT NULL,
                                  age int NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE customer (
                                  ageofretirement int NOT NULL,
                                  "password" varchar(100) NOT NULL,
                                  gender varchar(10) NOT NULL,
-                                 savingid varchar NOT NULL,
+                                 savingid serial NOT NULL,
                                  CONSTRAINT customer_pk PRIMARY KEY (customerid),
                                  CONSTRAINT customer_un UNIQUE (email)
 );

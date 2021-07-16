@@ -30,13 +30,13 @@ public class SavingMapperTest {
     @Test
     public void savingMappingTest()throws SQLException,Exception{
         ResultSet resultSet = mock(ResultSet.class);
-        when(resultSet.getString("savingid")).thenReturn("A1");
+        when(resultSet.getLong("savingid")).thenReturn(1L);
         when(resultSet.getDate("createdatetime")).thenReturn(Date.valueOf("1999-05-05"));
         when(resultSet.getBigDecimal("monthlysave")).thenReturn(new BigDecimal(3000));
 
         SavingDetail savingDetail = savingMapper.mapRow(resultSet,0);
         assertNotNull(savingDetail);
-        assertThat(savingDetail.getSavingId(),Matchers.equalTo("A1"));
+        assertThat(savingDetail.getSavingId(),Matchers.equalTo(1L));
         assertEquals(0,savingDetail.getDateTime().compareTo(Date.valueOf("1999-05-05")));
         assertEquals(0,savingDetail.getDepositamt().compareTo(new BigDecimal(3000)));
 

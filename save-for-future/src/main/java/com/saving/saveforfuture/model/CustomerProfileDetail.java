@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 @Data
 @Accessors(chain = true)
 public class CustomerProfileDetail {
-    private String customerId;
+    private long customerId;
     private String email;
     private Date dob;
     private int age;
@@ -21,7 +21,7 @@ public class CustomerProfileDetail {
     private BigDecimal tax;
     private int ageOfRetirement;
     private String password;
-    private String savingId;
+    private long savingId;
     private String gender;
     private int expectAge;
     private BigDecimal suggestAmount;

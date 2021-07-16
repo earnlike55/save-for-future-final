@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 @Data
 @Accessors(chain = true)
 public class SavingTransaction {
-    private String savingId;
+    private long savingId;
     private Date createdDateTime;
     private BigDecimal depositAmount;
 }

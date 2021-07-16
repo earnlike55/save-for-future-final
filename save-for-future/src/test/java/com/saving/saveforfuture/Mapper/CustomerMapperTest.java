@@ -32,7 +32,6 @@ public class CustomerMapperTest {
         when(resultSet.getInt("memberno")).thenReturn(1);
         when(resultSet.getBigDecimal("monthlyincome")).thenReturn(new BigDecimal(50000));
         when(resultSet.getBigDecimal("monthlyexpense")).thenReturn(new BigDecimal(3000));
-        when(resultSet.getBigDecimal("tax")).thenReturn((new BigDecimal(1000)));
         when(resultSet.getInt("expectage")).thenReturn(90);
         when(resultSet.getBigDecimal("balance")).thenReturn(new BigDecimal(20000));
         when(resultSet.getInt("ageofretirement")).thenReturn(60);
@@ -43,7 +42,6 @@ public class CustomerMapperTest {
         assertThat(customerProfileDetail.getMemberno(), Matchers.equalTo(1));
         assertEquals(0,customerProfileDetail.getMonthlyIncome().compareTo(new BigDecimal(50000)));
         assertEquals(0,customerProfileDetail.getMonthlyExpense().compareTo(new BigDecimal(3000)));
-        assertEquals(0,customerProfileDetail.getTax().compareTo(new BigDecimal(1000)));
         assertThat(customerProfileDetail.getExpectAge(),Matchers.equalTo(90));
         assertEquals(0,customerProfileDetail.getBalance().compareTo(new BigDecimal(20000)));
         assertThat(customerProfileDetail.getAgeOfRetirement(),Matchers.equalTo(60));

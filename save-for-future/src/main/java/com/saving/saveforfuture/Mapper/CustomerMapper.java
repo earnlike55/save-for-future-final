@@ -19,7 +19,6 @@ public class CustomerMapper implements RowMapper<CustomerProfileDetail> {
                 .setMemberno(resultSet.getInt("memberno"))
                 .setMonthlyIncome(resultSet.getBigDecimal("monthlyincome"))
                 .setMonthlyExpense(resultSet.getBigDecimal("monthlyexpense"))
-                .setTax(resultSet.getBigDecimal("tax"))
                 .setExpectAge(resultSet.getInt("expectage"))
                 .setBalance(resultSet.getBigDecimal("balance"))
                 .setAgeOfRetirement(resultSet.getInt("ageofretirement"));

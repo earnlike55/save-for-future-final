@@ -2,10 +2,7 @@ package com.saving.saveforfuture.controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.saving.saveforfuture.model.CustomerUpdateRequest;
-import com.saving.saveforfuture.model.CustomerUpdateResponse;
-import com.saving.saveforfuture.model.ProfileResponse;
-import com.saving.saveforfuture.model.SavingResponse;
+import com.saving.saveforfuture.model.*;
 import com.saving.saveforfuture.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +24,7 @@ public class CustomerController {
     @GetMapping("/v1/save-for-future/customer-profile-detail")
     @CrossOrigin(origins = "http://localhost:8082")
     public ResponseEntity<SavingResponse> getCustomerFinancialDetail(
-            @RequestParam(required = false) String customerId
+            @RequestParam(required = false) long customerId
             ){
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -36,7 +33,7 @@ public class CustomerController {
 
     @GetMapping("/v1/save-for-future/customer-profile")
     public ResponseEntity<ProfileResponse> getCustomerProfileDetail(
-            @RequestParam(required = false) String customerId){
+            @RequestParam(required = false) long customerId){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(customerService.getCustomerProfile(customerId));
@@ -44,8 +41,8 @@ public class CustomerController {
 
     @PatchMapping("/v1/save-for-future/customer-profile-update")
     public ResponseEntity<CustomerUpdateResponse> updateCustomerProfile(
-            @RequestParam(required  = false) String customerId,
-            @RequestBody CustomerUpdateRequest request)throws JsonParseException,InvalidFormatException {
+            @RequestParam(required  = false) long customerId,
+            @RequestBody CustomerUpdateRequest request) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(customerService.patchCustomerDetail(customerId,
@@ -54,6 +51,14 @@ public class CustomerController {
                             request.getMonthlyExpense(),
                             request.getMemberNo()));
         }
+
+    @PostMapping("/v1/save-for-future/post-customer-detail")
+    public ResponseEntity<CustomerInsertResponse> postCustomerProfile(
+            @RequestBody CustomerInsertRequest request){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerService.postCustomerProfile(request));
+    }
 
 
     }

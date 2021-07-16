@@ -8,8 +8,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class BankDetail {
 
-    private String bankId;
-    private String customerId;
+    private long bankId;
+    private long customerId;
     private String accountType;
     private int balance;
     private int interest;

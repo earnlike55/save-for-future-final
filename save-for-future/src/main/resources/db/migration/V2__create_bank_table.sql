@@ -1,6 +1,6 @@
 CREATE TABLE bank (
-                             bankid varchar(30) NOT NULL,
-                             customerid varchar(30) NOT NULL,
+                             bankid serial NOT NULL,
+                             customerid serial NOT NULL,
                              accounttype varchar(20) NOT NULL,
                              balance numeric NOT NULL,
                              interest numeric NOT NULL,

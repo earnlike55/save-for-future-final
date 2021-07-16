@@ -18,6 +18,6 @@ public class ProfileMapper implements RowMapper<Profile> {
                 .setGender(resultSet.getString("gender"))
                 .setEmail(resultSet.getString("email"))
                 .setBankAccNo(resultSet.getString("bankaccno"))
-                .setBankId(resultSet.getString("bankid"));
+                .setBankId(resultSet.getLong("bankid"));
     }
 }

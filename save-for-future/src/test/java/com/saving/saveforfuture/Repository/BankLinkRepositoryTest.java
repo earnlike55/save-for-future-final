@@ -28,17 +28,17 @@ public class BankLinkRepositoryTest {
     @Before
     public void before(){
         String sql = "INSERT INTO customer"+
-                "(customerid,email,dob,age,memberno,monthlyincome,monthlyexpense,tax,ageofretirement,\"password\",gender,savingid,expectage,customername)"+
+                "(customerid,email,dob,age,memberno,monthlyincome,monthlyexpense,ageofretirement,\"password\",gender,savingid,expectage)"+
                 "VALUES"+
-                "('002','aa@hotmail.com','1999-06-06',21,1,50000,3000,1000,60,'123456','male','A2',90,'Sarah')";
+                "(002,'aa@hotmail.com','1999-06-06',21,1,50000,3000,60,'123456','male',002,90)";
         String sql2 = "INSERT INTO bank"+
-                "(bankid,customerid,accounttype,balance,interest,bankname,bankaccno)"+
+                "(bankid,customerid,accounttype,balance,interest,bankaccno)"+
                 "VALUES"+
-                "('B2','002','deposit',20000,300,'KrungThai','123-45678')";
+                "(002,002,'deposit',20000,300,'123-45678')";
         String sql3 = "INSERT INTO saving"+
                 "(savingid,monthlysave,createdatetime,customerid)"+
                 "VALUES"+
-                "('A2',3000,'1999-05-05 12:00:00.000','002')";
+                "(002,3000,'1999-05-05 12:00:00.000',002)";
         jdbcTemplate.execute(sql);
         jdbcTemplate.execute(sql2);
         jdbcTemplate.execute(sql3);
@@ -46,8 +46,8 @@ public class BankLinkRepositoryTest {
 
     @Test
     public void getIdByEmailSuccess(){
-        String cusId = bankLinkRepository.getCustomerIdFromEmail("aa@hotmail.com");
-        assertThat(cusId,Matchers.equalTo("002"));
+        long cusId = bankLinkRepository.getCustomerIdFromEmail("aa@hotmail.com");
+        assertThat(cusId,Matchers.equalTo(002L));
     }
 
     @Test
@@ -58,14 +58,14 @@ public class BankLinkRepositoryTest {
 
     @Test
     public void getIdException(){
-        String cusId = "";
+        long cusId = 0;
         try {
             cusId = bankLinkRepository.getCustomerIdFromEmail("aabvc");
         }
         catch (EmptyResultDataAccessException e){
 
         }
-        assertThat(cusId,Matchers.equalTo(null));
+        assertThat(cusId,Matchers.equalTo(0L));
 
     }
 
@@ -84,7 +84,7 @@ public class BankLinkRepositoryTest {
 
     @Test
     public void updateBankSuccess(){
-        int check = bankLinkRepository.updateBankDetail("002","123-45678");
+        int check = bankLinkRepository.updateBankDetail(002L,"123-45678");
         assertThat(check,Matchers.equalTo(1));
     }
 }

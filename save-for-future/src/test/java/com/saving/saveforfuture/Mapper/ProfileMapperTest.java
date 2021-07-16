@@ -29,7 +29,7 @@ public class ProfileMapperTest {
         when(resultSet.getString("customername")).thenReturn("John");
         when(resultSet.getInt("age")).thenReturn(30);
         when(resultSet.getString("bankname")).thenReturn("KrungThai");
-        when(resultSet.getString("bankid")).thenReturn("A2");
+        when(resultSet.getLong("bankid")).thenReturn(002L);
         when(resultSet.getString("gender")).thenReturn("male");
         when(resultSet.getString("email")).thenReturn("earn@hotmail.com");
         when(resultSet.getString("bankaccno")).thenReturn("4563-122");
@@ -40,7 +40,7 @@ public class ProfileMapperTest {
         assertThat(profile.getAge(),Matchers.equalTo(30));
         assertThat(profile.getBankAccNo(),Matchers.equalTo("4563-122"));
         assertThat(profile.getBankName(),Matchers.equalTo("KrungThai"));
-        assertThat(profile.getBankId(),Matchers.equalTo("A2"));
+        assertThat(profile.getBankId(),Matchers.equalTo(002L));
         assertThat(profile.getGender(),Matchers.equalTo("male"));
         assertThat(profile.getEmail(),Matchers.equalTo("earn@hotmail.com"));
     }

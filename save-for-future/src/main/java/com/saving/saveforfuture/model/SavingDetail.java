@@ -10,8 +10,8 @@ import java.time.ZonedDateTime;
 @Data
 @Accessors(chain = true)
 public class SavingDetail {
-    private String savingId;
-    private String customerId;
+    private long savingId;
+    private long customerId;
     private BigDecimal suggestamt;
     private BigDecimal depositamt;
     private Date dateTime;

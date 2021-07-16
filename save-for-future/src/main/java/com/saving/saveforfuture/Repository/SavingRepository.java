@@ -17,7 +17,7 @@ public class SavingRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public List<SavingDetail> getSavingDetail(String customerId){
+    public List<SavingDetail> getSavingDetail(long customerId){
         StringJoiner sql = new StringJoiner(" ")
                 .add("SELECT")
                 .add("monthlysave,createdatetime,savingid")

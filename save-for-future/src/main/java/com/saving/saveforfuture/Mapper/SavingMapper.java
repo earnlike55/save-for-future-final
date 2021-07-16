@@ -15,7 +15,7 @@ public class SavingMapper implements RowMapper<SavingDetail> {
     @Override
     public SavingDetail mapRow(ResultSet resultSet, int i) throws SQLException {
         return new SavingDetail()
-                .setSavingId(resultSet.getString("savingid"))
+                .setSavingId(resultSet.getLong("savingid"))
                 .setDateTime(resultSet.getDate("createdatetime"))
                 .setDepositamt(resultSet.getBigDecimal("monthlysave"));
     }

@@ -6,13 +6,17 @@ import com.saving.saveforfuture.Repository.BankLinkRepository;
 import com.saving.saveforfuture.Repository.CustomerRepository;
 import com.saving.saveforfuture.Repository.SavingRepository;
 import com.saving.saveforfuture.model.*;
+import com.saving.saveforfuture.util.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +30,7 @@ public class CustomerService {
     @Autowired
     private BankLinkRepository bankLinkRepository;
 
-    public SavingResponse getCustomerFinancialDetail(String customerId) {
+    public SavingResponse getCustomerFinancialDetail(long customerId) {
         List<CustomerProfileDetail> customerProfileDetails = customerRepository.getCustomerFinancialDetail(customerId);
         List<SavingDetail> savingDetails = savingRepository.getSavingDetail(customerId);
         SavingResponse savingResponse = new SavingResponse();
@@ -55,7 +59,7 @@ public class CustomerService {
         return savingResponse;
     }
 
-    public ProfileResponse getCustomerProfile(String customerId) {
+    public ProfileResponse getCustomerProfile(long customerId) {
         List<CustomerProfileDetail> customerProfileDetails = customerRepository.getCustomerFinancialDetail(customerId);
         List<Profile> profile = customerRepository.getCustomerProfile(customerId);
         ProfileResponse profileResponse = new ProfileResponse();
@@ -77,10 +81,10 @@ public class CustomerService {
     }
 
     public BankLinkResponse patchBankDetail(String email,String bankAccNo){
-       String CusId = bankLinkRepository.getCustomerIdFromEmail(email);
+       long CusId = bankLinkRepository.getCustomerIdFromEmail(email);
         String bankAccount = bankLinkRepository.getCustomerBankAccNo(bankAccNo);
         BankLinkResponse bankLinkResponse = new BankLinkResponse();
-        if(CusId == null || bankAccount == null )
+        if(CusId == 0 || bankAccount == null )
         {
             bankLinkResponse
                     .setStatus(false)
@@ -97,12 +101,40 @@ public class CustomerService {
 
    }
 
-   public CustomerUpdateResponse patchCustomerDetail(String customerId,String email,BigDecimal monthlyIncome,BigDecimal monthlyExpense,int memberNo)throws JsonParseException,InvalidFormatException{
+   public CustomerUpdateResponse patchCustomerDetail(long customerId,String email,BigDecimal monthlyIncome,BigDecimal monthlyExpense,int memberNo){
        CustomerUpdateResponse customerUpdateResponse = new CustomerUpdateResponse();
        customerRepository.pathCustomerDetail(monthlyIncome,monthlyExpense,memberNo,email,customerId);
         customerUpdateResponse.setDescription("Success");
         customerUpdateResponse.setStatus(true);
         return customerUpdateResponse;
+   }
+
+   public CustomerInsertResponse postCustomerProfile(CustomerInsertRequest request){
+        CustomerInsertResponse customerInsertResponse = new CustomerInsertResponse();
+        String salt = PasswordUtils.getSalt(30);
+
+
+        int age = getAge(request.getDob());
+        String mySecurePassword = PasswordUtils.generateSecurePassword(request.getPassword(),salt);
+        request.setPassword(mySecurePassword);
+        int effect = customerRepository.postCustomerDetail(request,age);
+        if(effect == -1){
+            customerInsertResponse.setDescription("Email already exist");
+            customerInsertResponse.setStatus(false);
+        }
+        else{
+            customerInsertResponse.setDescription("Success");
+            customerInsertResponse.setStatus(true);
+        }
+
+
+        return customerInsertResponse;
+
+   }
+
+   public int getAge(Date dob){
+        Period age = Period.between(dob.toLocalDate(), LocalDate.now());
+        return age.getYears();
    }
 
     public BigDecimal calculateSuggestAmount(int expectAge, BigDecimal expense, int retireAge) {

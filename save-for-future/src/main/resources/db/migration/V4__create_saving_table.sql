@@ -1,6 +1,6 @@
 CREATE TABLE saving (
-                               savingid varchar NOT NULL,
-                               customerid varchar NOT NULL,
+                               savingid serial NOT NULL,
+                               customerid serial NOT NULL,
                                suggestamt numeric NOT NULL,
                                monthlysave numeric NOT NULL,
                                remainamt numeric NOT NULL,

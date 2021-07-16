@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class ProfileResponse {
     private String customerName;
     private int age;
-    private String bankId;
+    private long bankId;
     private String bankName;
     private String bankAccNo;
     private String Gender;
@@ -19,6 +19,5 @@ public class ProfileResponse {
     private BigDecimal monthlyIncome;
     private BigDecimal monthlyExpense;
     private int memberNo;
-    private BigDecimal tax;
     private BigDecimal suggestMonthly;
 }

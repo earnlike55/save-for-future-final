@@ -24,7 +24,7 @@ public class BankLinkRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public int updateBankDetail(String customerId,String bankAccNo){
+    public int updateBankDetail(long customerId,String bankAccNo){
         StringJoiner sql = new StringJoiner(" ")
                 .add("UPDATE")
                 .add("customer")
@@ -39,7 +39,7 @@ public class BankLinkRepository {
         return namedParameterJdbcTemplate.update(sql.toString(),mapSqlParameterSource);
     }
 
-    public String getCustomerIdFromEmail(String email){
+    public long getCustomerIdFromEmail(String email){
         StringJoiner sql = new StringJoiner(" ")
                 .add("SELECT")
                 .add("a.customerid")
@@ -50,12 +50,12 @@ public class BankLinkRepository {
 
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource()
                 .addValue("email",email);
-        String emails = "";
+        long emails = 0;
         try{
-             emails =  namedParameterJdbcTemplate.queryForObject(sql.toString(),mapSqlParameterSource,String.class);
+             emails =  namedParameterJdbcTemplate.queryForObject(sql.toString(),mapSqlParameterSource,long.class);
         }
         catch(EmptyResultDataAccessException e){
-            return null;
+            return 0;
         }
         return emails;
     }

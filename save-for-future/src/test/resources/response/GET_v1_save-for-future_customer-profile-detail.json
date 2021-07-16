@@ -1,16 +1,16 @@
 {
-  "monthlyIncome": 10000,
+  "monthlyIncome": 50000,
   "monthlyExpense": 5000,
-  "suggestAmount": 1500000,
-  "remainingAmount": 1490000,
+  "suggestAmount": 1800000,
+  "remainingAmount": 1790000,
   "suggestMonthly": 5000,
-  "remainingPercent": 99.30000,
-  "savePercent": 0.60000,
+  "remainingPercent": 99.40000,
+  "savePercent": 0.50000,
   "savingTransactions": [
     {
-      "savingId": "A1",
-      "createdDateTime": "1999-05-05",
-      "depositAmount": 2000
+      "savingId": 1,
+      "createdDateTime": "1999-06-04",
+      "depositAmount": 5000
     }
   ]
 }
