@@ -1,8 +1,7 @@
 package com.saving.saveforfuture.Repository;
 
-import com.saving.saveforfuture.model.CustomerProfileDetail;
-import com.saving.saveforfuture.model.CustomerUpdateRequest;
-import com.saving.saveforfuture.model.Profile;
+import com.saving.saveforfuture.model.*;
+import com.saving.saveforfuture.util.PasswordUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,6 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Date;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -103,10 +103,51 @@ public class CustomerRepositoryTest {
     }
 
     @Test
+    public void postCustomerDetailSuccess(){
+        int age = 30;
+        CustomerInsertRequest request = new CustomerInsertRequest()
+                .setCustomerName("Brandon")
+                .setDob(Date.valueOf("1981-04-21"))
+                .setGender("Male")
+                .setEmail("brand@gmail.com")
+                .setPassword("Brandon1981")
+                .setMonthlyIncome(new BigDecimal(40000))
+                .setMonthlyExpense(new BigDecimal(3000))
+                .setMemberNo(3)
+                .setExpectAge(90)
+                .setAgeOfRetirement(60);
+        String salt = PasswordUtils.getSalt(30);
+        int effectRow = customerRepository.postCustomerDetail(request,age,salt);
+        assertThat(effectRow,Matchers.equalTo(1));
+
+    }
+
+    @Test
+    public void postCustomerDetailFail(){
+        int age = 30;
+        CustomerInsertRequest request = new CustomerInsertRequest()
+                .setCustomerName("Brandon")
+                .setDob(Date.valueOf("1981-04-21"))
+                .setGender("Male")
+                .setEmail("earn1@hotmail.com")
+                .setPassword("Brandon1981")
+                .setMonthlyIncome(new BigDecimal(40000))
+                .setMonthlyExpense(new BigDecimal(3000))
+                .setMemberNo(3)
+                .setExpectAge(90)
+                .setAgeOfRetirement(60);
+        String salt = PasswordUtils.getSalt(30);
+        int effectRow = customerRepository.postCustomerDetail(request,age,salt);
+        assertThat(effectRow,Matchers.equalTo(-1));
+
+    }
+
+    @Test
     public void test123()
     {
         BigDecimal test1 = new BigDecimal(60000);
         BigDecimal test2 = new BigDecimal(90000);
         test1.divide(test2, RoundingMode.FLOOR);
     }
+
 }

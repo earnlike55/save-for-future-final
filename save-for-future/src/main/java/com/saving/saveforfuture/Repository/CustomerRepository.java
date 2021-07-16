@@ -104,12 +104,12 @@ public class CustomerRepository {
         return namedParameterJdbcTemplate.update(sql.toString(),mapSqlParameterSource);
     }
 
-    public int postCustomerDetail(CustomerInsertRequest request,int age){
+    public int postCustomerDetail(CustomerInsertRequest request,int age,String salt){
         if(selectEmail(request.getEmail()) == false){
             final String sql = "INSERT INTO customer "+
-                    "(customername,email,dob,age,memberno,monthlyincome,monthlyexpense,ageofretirement,gender,expectage,password) "+
+                    "(customername,email,dob,age,memberno,monthlyincome,monthlyexpense,ageofretirement,gender,expectage,password,salt) "+
                     "VALUES "+
-                    "(:customername,:email,:dob,:age,:memberno,:monthlyincome,:monthlyexpense,:ageofretirement,:gender,:expectage,:password);";
+                    "(:customername,:email,:dob,:age,:memberno,:monthlyincome,:monthlyexpense,:ageofretirement,:gender,:expectage,:password,:salt);";
             Map<String,Object> namedParameters = new HashMap<>();
             namedParameters.put("customername",request.getCustomerName());
             namedParameters.put("email",request.getEmail());
@@ -122,6 +122,7 @@ public class CustomerRepository {
             namedParameters.put("gender",request.getGender());
             namedParameters.put("expectage",request.getExpectAge());
             namedParameters.put("password",request.getPassword());
+            namedParameters.put("salt",salt);
             return namedParameterJdbcTemplate.update(sql,namedParameters);
         }
         else

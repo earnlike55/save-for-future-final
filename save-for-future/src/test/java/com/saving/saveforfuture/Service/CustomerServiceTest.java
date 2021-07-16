@@ -161,4 +161,43 @@ public class CustomerServiceTest {
         assertEquals(true,customerUpdateResponse.isStatus());
 
     }
+
+    @Test
+    public void postCustomerSuccess(){
+        CustomerInsertRequest request = new CustomerInsertRequest()
+                .setCustomerName("Brandon")
+                .setDob(Date.valueOf("1981-04-21"))
+                .setGender("Male")
+                .setEmail("brandon@gmail.com")
+                .setPassword("Brandon1981")
+                .setMonthlyIncome(new BigDecimal(40000))
+                .setMonthlyExpense(new BigDecimal(3000))
+                .setMemberNo(3)
+                .setExpectAge(90)
+                .setAgeOfRetirement(60);
+        when(customerRepository.postCustomerDetail(any(),anyInt(),anyString())).thenReturn(1);
+        CustomerInsertResponse response = customerService.postCustomerProfile(request);
+        assertThat(response.getDescription(),Matchers.equalTo("Success"));
+        assertEquals(true,response.isStatus());
+
+    }
+
+    @Test
+    public void postCustomerFail(){
+        CustomerInsertRequest request = new CustomerInsertRequest()
+                .setCustomerName("Brandon")
+                .setDob(Date.valueOf("1981-04-21"))
+                .setGender("Male")
+                .setEmail("earn1@hotmail.com")
+                .setPassword("Brandon1981")
+                .setMonthlyIncome(new BigDecimal(40000))
+                .setMonthlyExpense(new BigDecimal(3000))
+                .setMemberNo(3)
+                .setExpectAge(90)
+                .setAgeOfRetirement(60);
+        when(customerRepository.postCustomerDetail(any(),anyInt(),anyString())).thenReturn(-1);
+        CustomerInsertResponse response = customerService.postCustomerProfile(request);
+        assertThat(response.getDescription(),Matchers.equalTo("Email already exist"));
+        assertEquals(false,response.isStatus());
+    }
 }

@@ -117,7 +117,7 @@ public class CustomerService {
         int age = getAge(request.getDob());
         String mySecurePassword = PasswordUtils.generateSecurePassword(request.getPassword(),salt);
         request.setPassword(mySecurePassword);
-        int effect = customerRepository.postCustomerDetail(request,age);
+        int effect = customerRepository.postCustomerDetail(request,age,salt);
         if(effect == -1){
             customerInsertResponse.setDescription("Email already exist");
             customerInsertResponse.setStatus(false);
