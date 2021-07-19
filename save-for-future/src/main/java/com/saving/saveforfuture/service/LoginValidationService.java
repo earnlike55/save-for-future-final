@@ -26,26 +26,20 @@ public class LoginValidationService {
                     securePass);
             if (loginValidationList != null) {
 
-                boolean passwordMatch;
-                String getSecurePassword = "";
-                try {
-                    getSecurePassword = loginValidationList.get(0).getPassword();
-                } catch (IndexOutOfBoundsException e) {
-                    response.setDescription("Wrong password");
-                    response.setStatus(false);
-                    return response;
-                }
-
-                passwordMatch = PasswordUtils.verifyUserPassword(
+                boolean passwordMatch = PasswordUtils.verifyUserPassword(
                         request.getPassword(),
-                        getSecurePassword,
+                        loginValidationList.get(0).getPassword(),
                         salts);
-                if (loginValidationList.get(0).getEmail().equals(request.getEmail()) &&
-                        passwordMatch == true) {
+                if(passwordMatch == true) {
                     response.setDescription("Success");
                     response.setStatus(true);
                     response.setCustomerId(loginValidationList.get(0).getCustomerId());
                 }
+                else {
+                    response.setDescription("Wrong password");
+                    response.setStatus(false);
+                }
+
 
                 return response;
             }
