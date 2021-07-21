@@ -18,7 +18,7 @@ public class LoginValidationRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public List<LoginValidation> selectEmailPassword(String email, String password){
+    public LoginValidation selectEmailPassword(String email, String password){
         StringJoiner sql = new StringJoiner(" ")
                 .add("SELECT")
                 .add("email,password,salt,customerid")
@@ -27,17 +27,20 @@ public class LoginValidationRepository {
                 .add("WHERE")
                 .add("email=:email")
                 .add(" ");
-        List<LoginValidation> loginValidationList = new ArrayList<>();
+        LoginValidation loginValidationList;
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource()
                 .addValue("email",email)
                 .addValue("password",password);
         try{
-            namedParameterJdbcTemplate.query(sql.toString(),mapSqlParameterSource,new LoginValidationMapper());
-        }
-        catch (EmptyResultDataAccessException e){
-            return null;
-        }
-        return namedParameterJdbcTemplate.query(sql.toString(),mapSqlParameterSource,new LoginValidationMapper());
+            loginValidationList = namedParameterJdbcTemplate.queryForObject(sql.toString(),mapSqlParameterSource,new LoginValidationMapper());
+            System.err.println(loginValidationList);
+            System.err.println(sql);
+            System.err.println(mapSqlParameterSource);
+       }
+       catch (EmptyResultDataAccessException e){
+           return null;
+      }
+        return loginValidationList;
 
 
     }

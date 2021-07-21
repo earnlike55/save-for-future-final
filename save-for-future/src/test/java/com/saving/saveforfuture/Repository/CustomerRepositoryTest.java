@@ -122,25 +122,25 @@ public class CustomerRepositoryTest {
 
     }
 
-    @Test
-    public void postCustomerDetailFail(){
-        int age = 30;
-        CustomerInsertRequest request = new CustomerInsertRequest()
-                .setCustomerName("Brandon")
-                .setDob(Date.valueOf("1981-04-21"))
-                .setGender("Male")
-                .setEmail("earn1@hotmail.com")
-                .setPassword("Brandon1981")
-                .setMonthlyIncome(new BigDecimal(40000))
-                .setMonthlyExpense(new BigDecimal(3000))
-                .setMemberNo(3)
-                .setExpectAge(90)
-                .setAgeOfRetirement(60);
-        String salt = PasswordUtils.getSalt(30);
-        int effectRow = customerRepository.postCustomerDetail(request,age,salt);
-        assertThat(effectRow,Matchers.equalTo(-1));
-
-    }
+//    @Test
+//    public void postCustomerDetailFail(){
+//        int age = 30;
+//        CustomerInsertRequest request = new CustomerInsertRequest()
+//                .setCustomerName("Brandon")
+//                .setDob(Date.valueOf("1981-04-21"))
+//                .setGender("Male")
+//                .setEmail("earn1@hotmail.com")
+//                .setPassword("Brandon1981")
+//                .setMonthlyIncome(new BigDecimal(40000))
+//                .setMonthlyExpense(new BigDecimal(3000))
+//                .setMemberNo(3)
+//                .setExpectAge(90)
+//                .setAgeOfRetirement(60);
+//        String salt = PasswordUtils.getSalt(30);
+//        int effectRow = customerRepository.postCustomerDetail(request,age,salt);
+//        assertThat(effectRow,Matchers.equalTo(-1));
+//
+//    }
 
     @Test
     public void test123()

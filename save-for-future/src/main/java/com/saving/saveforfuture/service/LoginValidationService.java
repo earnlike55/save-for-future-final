@@ -21,19 +21,19 @@ public class LoginValidationService {
         String salts = loginValidationRepository.getSalt(request.getEmail());
         if(salts != null) {
             String securePass = PasswordUtils.generateSecurePassword(request.getPassword(), salts);
-            List<LoginValidation> loginValidationList = loginValidationRepository.selectEmailPassword(
+            LoginValidation loginValidationList = loginValidationRepository.selectEmailPassword(
                     request.getEmail(),
                     securePass);
             if (loginValidationList != null) {
 
                 boolean passwordMatch = PasswordUtils.verifyUserPassword(
                         request.getPassword(),
-                        loginValidationList.get(0).getPassword(),
+                        loginValidationList.getPassword(),
                         salts);
                 if(passwordMatch == true) {
                     response.setDescription("Success");
                     response.setStatus(true);
-                    response.setCustomerId(loginValidationList.get(0).getCustomerId());
+                    response.setCustomerId(loginValidationList.getCustomerId());
                 }
                 else {
                     response.setDescription("Wrong password");

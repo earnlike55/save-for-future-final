@@ -92,7 +92,10 @@ public class CustomerRepository {
                 .add("UPDATE")
                 .add("customer")
                 .add("SET")
-                .add("monthlyincome=:monthlyincome,monthlyexpense=:monthlyexpense,memberno=:memberno,email=:email")
+                .add("monthlyincome=COALESCE(:monthlyincome,monthlyincome),")
+                .add("monthlyexpense=COALESCE(:monthlyexpense,monthlyexpense),")
+                .add("memberno=COALESCE(:memberno,memberno),")
+                .add("email=COALESCE(:email,email)")
                 .add("WHERE")
                 .add("customerid=:customerid");
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource()
