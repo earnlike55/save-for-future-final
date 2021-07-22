@@ -17,7 +17,6 @@ public class BankController {
     private CustomerService customerService;
 
     @PatchMapping("/v1/save-for-future/update-bank")
-    @CrossOrigin(origins = "http://localhost:8082")
     public ResponseEntity<BankLinkResponse> patchBankDetail(
             @RequestBody BankLinkRequest bankLinkRequest) {
         return ResponseEntity

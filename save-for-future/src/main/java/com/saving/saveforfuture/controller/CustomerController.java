@@ -22,7 +22,6 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/v1/save-for-future/customer-profile-detail")
-    @CrossOrigin(origins = "http://localhost:8082")
     public ResponseEntity<SavingResponse> getCustomerFinancialDetail(
             @RequestParam(required = false) long customerId
             ){

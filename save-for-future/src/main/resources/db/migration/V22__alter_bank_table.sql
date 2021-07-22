@@ -1,0 +1,1 @@
+ALTER TABLE bank ADD flag int NULL DEFAULT 0;

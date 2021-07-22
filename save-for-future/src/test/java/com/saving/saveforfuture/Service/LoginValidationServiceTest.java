@@ -35,16 +35,53 @@ public class LoginValidationServiceTest {
     public void loginTestSuccess(){
         LoginValidation loginValidation = new LoginValidation()
                 .setEmail("Samie@hotmail.com")
-                .setSalt("1234")
+                .setSalt("0dqYku9eG5gZetWRewL3G5nGBURyPz")
                 .setCustomerId(10L)
-                .setPassword("earnearn55");
+                .setPassword("rfcICg1B8RGPeXqiu8v0mwft2hMcS6tbymb5FKlIg94=");
         LoginValidationRequest loginValidationRequest = new LoginValidationRequest()
                 .setEmail("Samie@hotmail.com")
                 .setPassword("earnearn55");
+        when(loginValidationRepository.getSalt(anyString())).thenReturn("0dqYku9eG5gZetWRewL3G5nGBURyPz");
+        when(loginValidationRepository.selectEmailPassword(anyString(),anyString())).thenReturn(loginValidation);
+        LoginValidationResponse response;
+        response = loginValidationService.loginSuccess(loginValidationRequest);
+        assertThat(response.getDescription(),Matchers.equalTo("Success"));
+        assertEquals(true,response.isStatus());
+    }
+
+    @Test
+    public void loginTestFailWrongEmail(){
+        LoginValidation loginValidation = new LoginValidation()
+                .setEmail("Samie1@hotmail.comn")
+                .setSalt("0dqYku9eG5gZetWRewL3G5nGBURyPz")
+                .setCustomerId(10L)
+                .setPassword("rfcICg1B8RGPeXqiu8v0mwft2hMcS6tbymb5FKlIg94=");
+        LoginValidationRequest loginValidationRequest = new LoginValidationRequest()
+                .setEmail("Samie4@hotmail.com")
+                .setPassword("earnearn55");
+        when(loginValidationRepository.getSalt(anyString())).thenReturn(null);
         when(loginValidationRepository.selectEmailPassword(anyString(),anyString())).thenReturn(loginValidation);
         LoginValidationResponse response;
         response = loginValidationService.loginSuccess(loginValidationRequest);
         assertThat(response.getDescription(),Matchers.equalTo("Wrong email"));
+        assertEquals(false,response.isStatus());
+    }
+
+    @Test
+    public void loginTestFailWrongPassword(){
+        LoginValidation loginValidation = new LoginValidation()
+                .setEmail("Samie@hotmail.comn")
+                .setSalt("0dqYku9eG5gZetWRewL3G5nGBURyPz")
+                .setCustomerId(10L)
+                .setPassword("rfcICg1B8RGPeXqiu8v0mwft2hMcS6tbymb5FKlIg94");
+        LoginValidationRequest loginValidationRequest = new LoginValidationRequest()
+                .setEmail("Samie@hotmail.com")
+                .setPassword("earnearn55");
+        when(loginValidationRepository.getSalt(anyString())).thenReturn("0dqYku9eG5gZetWRewL3G5nGBURyPz");
+        when(loginValidationRepository.selectEmailPassword(anyString(),anyString())).thenReturn(loginValidation);
+        LoginValidationResponse response;
+        response = loginValidationService.loginSuccess(loginValidationRequest);
+        assertThat(response.getDescription(),Matchers.equalTo("Wrong password"));
         assertEquals(false,response.isStatus());
     }
 

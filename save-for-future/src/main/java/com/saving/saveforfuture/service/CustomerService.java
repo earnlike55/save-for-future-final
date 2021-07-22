@@ -33,7 +33,9 @@ public class CustomerService {
     public SavingResponse getCustomerFinancialDetail(long customerId) {
         List<CustomerProfileDetail> customerProfileDetails = customerRepository.getCustomerFinancialDetail(customerId);
         List<SavingDetail> savingDetails = savingRepository.getSavingDetail(customerId);
+        int flags = savingRepository.selectFlag(customerId);
         SavingResponse savingResponse = new SavingResponse();
+        savingRepository.updateBalance(customerId,updateBalanced(customerProfileDetails.get(0).getBalance(),customerId,flags));
         savingResponse.setMonthlyIncome(customerProfileDetails.get(0).getMonthlyIncome())
                 .setMonthlyExpense(customerProfileDetails.get(0).getMonthlyExpense())
                 .setSuggestAmount(calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
@@ -130,6 +132,20 @@ public class CustomerService {
 
         return customerInsertResponse;
 
+   }
+
+   public BigDecimal updateBalanced(BigDecimal balance,long customerId,int flag){
+       BigDecimal saving = new BigDecimal(0);
+       List<SavingDetail> savingDetails = savingRepository.getSavingDetail(customerId);
+       if(flag!=0){
+           flag++;
+       }
+       for (int i = flag;i< savingDetails.size();i++){
+           saving = saving.add(savingDetails.get(i).getDepositamt());
+           savingRepository.updateFlag(customerId,i);
+       }
+        BigDecimal update = balance.add(saving);
+        return update;
    }
 
    public int getAge(Date dob){
