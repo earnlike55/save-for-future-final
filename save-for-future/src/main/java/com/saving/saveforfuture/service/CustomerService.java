@@ -55,7 +55,9 @@ public class CustomerService {
                 .setSavePercent(calculateDepositAmountPercent(customerProfileDetails.get(0).getBalance(),
                         calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
                                 customerProfileDetails.get(0).getMonthlyExpense(), customerProfileDetails.get(0).getAgeOfRetirement())))
-                .setSavingTransactions(mapToSavingTransaction(savingDetails));
+                .setSavingTransactions(mapToSavingTransaction(savingDetails))
+                .setStatus(1000)
+                .setDescription("Success");
 
 
         return savingResponse;
@@ -77,7 +79,9 @@ public class CustomerService {
                 .setMemberNo(customerProfileDetails.get(0).getMemberno())
                 .setSuggestMonthly(calculateMonthlySave(calculateSuggestAmount(customerProfileDetails.get(0).getExpectAge(),
                         customerProfileDetails.get(0).getMonthlyExpense(),customerProfileDetails.get(0).getAgeOfRetirement()),
-                        customerProfileDetails.get(0).getExpectAge(),customerProfileDetails.get(0).getAgeOfRetirement()));
+                        customerProfileDetails.get(0).getExpectAge(),customerProfileDetails.get(0).getAgeOfRetirement()))
+                .setDescription("Success")
+                .setStatus(1000);
         return profileResponse;
 
     }
@@ -89,13 +93,13 @@ public class CustomerService {
         if(CusId == 0 || bankAccount == null )
         {
             bankLinkResponse
-                    .setStatus(false)
+                    .setStatus(1999)
                     .setDescription("No such email or Account number exist");
         }
         else{
             bankLinkResponse
                     .setDescription("Success")
-                    .setStatus(true);
+                    .setStatus(1000);
             bankLinkRepository.updateBankDetail(CusId,bankAccNo);
 
         }
@@ -107,7 +111,7 @@ public class CustomerService {
        CustomerUpdateResponse customerUpdateResponse = new CustomerUpdateResponse();
        customerRepository.pathCustomerDetail(monthlyIncome,monthlyExpense,memberNo,email,customerId);
         customerUpdateResponse.setDescription("Success");
-        customerUpdateResponse.setStatus(true);
+        customerUpdateResponse.setStatus(1000);
         return customerUpdateResponse;
    }
 
@@ -122,11 +126,11 @@ public class CustomerService {
         int effect = customerRepository.postCustomerDetail(request,age,salt);
         if(effect == -1){
             customerInsertResponse.setDescription("Email already exist");
-            customerInsertResponse.setStatus(false);
+            customerInsertResponse.setStatus(1999);
         }
         else{
             customerInsertResponse.setDescription("Success");
-            customerInsertResponse.setStatus(true);
+            customerInsertResponse.setStatus(1000);
         }
 
 

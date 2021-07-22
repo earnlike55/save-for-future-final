@@ -18,5 +18,7 @@ public class SavingResponse {
     private BigDecimal remainingPercent;
     private BigDecimal savePercent;
     private List<SavingTransaction> savingTransactions;
+    private String description;
+    private int status;
 
 }

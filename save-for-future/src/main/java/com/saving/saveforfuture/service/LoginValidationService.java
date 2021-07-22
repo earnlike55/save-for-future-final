@@ -32,12 +32,12 @@ public class LoginValidationService {
                         salts);
                 if(passwordMatch == true) {
                     response.setDescription("Success");
-                    response.setStatus(true);
+                    response.setStatus(1000);
                     response.setCustomerId(loginValidationList.getCustomerId());
                 }
                 else {
                     response.setDescription("Wrong password");
-                    response.setStatus(false);
+                    response.setStatus(1999);
                 }
 
 
@@ -45,7 +45,7 @@ public class LoginValidationService {
             }
         }
         response.setDescription("Wrong email");
-        response.setStatus(false);
+        response.setStatus(1999);
         return response;
     }
 }

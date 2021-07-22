@@ -6,6 +6,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class BankLinkResponse {
-    private boolean status;
+    private int status;
     private String description;
 }

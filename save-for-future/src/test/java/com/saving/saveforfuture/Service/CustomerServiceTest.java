@@ -138,7 +138,7 @@ public class CustomerServiceTest {
         BankLinkResponse bankLinkResponseTest = customerService.patchBankDetail("earn@hotmail.com","123-456-78");
         ProfileResponse profileResponseTest = customerService.getCustomerProfile(001);
         assertThat(bankLinkResponseTest.getDescription(),Matchers.equalTo("Success"));
-        assertEquals(true,bankLinkResponseTest.isStatus());
+        assertThat(bankLinkResponseTest.getStatus(),Matchers.equalTo(1000));
 
 
     }
@@ -158,7 +158,7 @@ public class CustomerServiceTest {
                 customerUpdateRequest.getMonthlyExpense(),
                 customerUpdateRequest.getMemberNo());
         assertThat(customerUpdateResponse.getDescription(),Matchers.equalTo("Success"));
-        assertEquals(true,customerUpdateResponse.isStatus());
+        assertThat(customerUpdateResponse.getStatus(),Matchers.equalTo(1000));
 
     }
 
@@ -178,7 +178,7 @@ public class CustomerServiceTest {
         when(customerRepository.postCustomerDetail(any(),anyInt(),anyString())).thenReturn(1);
         CustomerInsertResponse response = customerService.postCustomerProfile(request);
         assertThat(response.getDescription(),Matchers.equalTo("Success"));
-        assertEquals(true,response.isStatus());
+        assertThat(response.getStatus(),Matchers.equalTo(1000));
 
     }
 
@@ -198,6 +198,6 @@ public class CustomerServiceTest {
         when(customerRepository.postCustomerDetail(any(),anyInt(),anyString())).thenReturn(-1);
         CustomerInsertResponse response = customerService.postCustomerProfile(request);
         assertThat(response.getDescription(),Matchers.equalTo("Email already exist"));
-        assertEquals(false,response.isStatus());
+        assertThat(response.getStatus(),Matchers.equalTo(1999));
     }
 }

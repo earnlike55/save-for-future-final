@@ -7,6 +7,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class CustomerInsertResponse {
-    private boolean status;
+    private int status;
     private String description;
 }

@@ -20,4 +20,6 @@ public class ProfileResponse {
     private BigDecimal monthlyExpense;
     private int memberNo;
     private BigDecimal suggestMonthly;
+    private int status;
+    private String description;
 }

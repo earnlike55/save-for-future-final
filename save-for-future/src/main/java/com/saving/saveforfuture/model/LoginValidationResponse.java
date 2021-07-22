@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class LoginValidationResponse {
-    private boolean status;
+    private int status;
     private String description;
     private long customerId;
 }

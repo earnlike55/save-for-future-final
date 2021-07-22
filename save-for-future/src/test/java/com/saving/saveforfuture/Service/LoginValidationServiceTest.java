@@ -46,7 +46,7 @@ public class LoginValidationServiceTest {
         LoginValidationResponse response;
         response = loginValidationService.loginSuccess(loginValidationRequest);
         assertThat(response.getDescription(),Matchers.equalTo("Success"));
-        assertEquals(true,response.isStatus());
+        assertThat(response.getStatus(),Matchers.equalTo(1000));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class LoginValidationServiceTest {
         LoginValidationResponse response;
         response = loginValidationService.loginSuccess(loginValidationRequest);
         assertThat(response.getDescription(),Matchers.equalTo("Wrong email"));
-        assertEquals(false,response.isStatus());
+        assertThat(response.getDescription(),Matchers.equalTo(1999));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class LoginValidationServiceTest {
         LoginValidationResponse response;
         response = loginValidationService.loginSuccess(loginValidationRequest);
         assertThat(response.getDescription(),Matchers.equalTo("Wrong password"));
-        assertEquals(false,response.isStatus());
+        assertThat(response.getDescription(),Matchers.equalTo(1999));
     }
 
 
