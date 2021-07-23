@@ -60,7 +60,7 @@ public class BankLinkRepository {
         return emails;
     }
 
-    public String getCustomerBankAccNo(String bankAccNo){
+    public String getCustomerBankAccNo(String bankAccNo,long customerId){
         StringJoiner sql = new StringJoiner(" ")
                 .add("SELECT")
                 .add("bankaccno")
@@ -68,9 +68,12 @@ public class BankLinkRepository {
                 .add("bank")
                 .add("WHERE")
                 .add("bankaccno=:bankaccno")
+                .add("AND")
+                .add("customerid=:customerid")
                 .add(" ");
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource()
-                .addValue("bankaccno",bankAccNo);
+                .addValue("bankaccno",bankAccNo)
+                .addValue("customerid",customerId);
         String bankAcc = "";
         try{
             bankAcc = namedParameterJdbcTemplate.queryForObject(sql.toString(),mapSqlParameterSource,String.class);

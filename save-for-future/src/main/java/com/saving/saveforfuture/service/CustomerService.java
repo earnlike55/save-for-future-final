@@ -88,7 +88,7 @@ public class CustomerService {
 
     public BankLinkResponse patchBankDetail(String email,String bankAccNo){
        long CusId = bankLinkRepository.getCustomerIdFromEmail(email);
-        String bankAccount = bankLinkRepository.getCustomerBankAccNo(bankAccNo);
+        String bankAccount = bankLinkRepository.getCustomerBankAccNo(bankAccNo,CusId);
         BankLinkResponse bankLinkResponse = new BankLinkResponse();
         if(CusId == 0 || bankAccount == null )
         {

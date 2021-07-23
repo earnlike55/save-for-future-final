@@ -133,7 +133,7 @@ public class CustomerServiceTest {
         profileList.add(0,profile);
         when(customerRepository.getCustomerFinancialDetail(anyLong())).thenReturn(customerProfileDetailList);
         when(customerRepository.getCustomerProfile(anyLong())).thenReturn(profileList);
-        when(bankLinkRepository.getCustomerBankAccNo(any())).thenReturn("123-456-78");
+        when(bankLinkRepository.getCustomerBankAccNo(any(),anyLong())).thenReturn("123-456-78");
         when(bankLinkRepository.getCustomerIdFromEmail(any())).thenReturn(001L);
         BankLinkResponse bankLinkResponseTest = customerService.patchBankDetail("earn@hotmail.com","123-456-78");
         ProfileResponse profileResponseTest = customerService.getCustomerProfile(001);

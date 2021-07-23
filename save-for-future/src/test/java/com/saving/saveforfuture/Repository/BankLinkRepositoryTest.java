@@ -52,7 +52,7 @@ public class BankLinkRepositoryTest {
 
     @Test
     public void getCustomerBankAcc(){
-        String accNo = bankLinkRepository.getCustomerBankAccNo("123-45678");
+        String accNo = bankLinkRepository.getCustomerBankAccNo("123-45678",2L);
         assertThat(accNo,Matchers.equalTo("123-45678"));
     }
 
@@ -73,7 +73,7 @@ public class BankLinkRepositoryTest {
     public void getCustomerAccException(){
         String cusId = "";
         try {
-            cusId = bankLinkRepository.getCustomerBankAccNo("1");
+            cusId = bankLinkRepository.getCustomerBankAccNo("1",2L);
         }
         catch (EmptyResultDataAccessException e){
 
