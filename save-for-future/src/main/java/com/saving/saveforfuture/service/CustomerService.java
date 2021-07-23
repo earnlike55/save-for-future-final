@@ -144,6 +144,9 @@ public class CustomerService {
        if(flag!=0){
            flag++;
        }
+       if (flag == savingDetails.size()-1){
+           return balance;
+       }
        for (int i = flag;i< savingDetails.size();i++){
            saving = saving.add(savingDetails.get(i).getDepositamt());
            savingRepository.updateFlag(customerId,i);
