@@ -1,4 +1,10 @@
+FROM maven:3.6.0-jdk-11-slim AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean install -DskipTests
+
 FROM openjdk:11
-ADD target/Save-for-future.jar Save-for-future.jar
+ADD target/ Save-for-future.jar
+COPY --from=build /home/app/target/Save-for-future.jar /home/Save-for-future.jar
 EXPOSE 8082
-ENTRYPOINT ["java","-jar","Save-for-future.jar"]
+ENTRYPOINT ["java","-jar","/home/Save-for-future.jar"]
