@@ -1,0 +1,4 @@
+FROM openjdk:11
+ADD target/Save-for-future.jar Save-for-future.jar
+EXPOSE 8082
+ENTRYPOINT ["java","-jar","Save-for-future.jar"]

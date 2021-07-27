@@ -55,7 +55,7 @@ public class CustomerRepositoryTest {
     @Test
     public void getFinancialSuccess(){
         List<CustomerProfileDetail> check = customerRepository.getCustomerFinancialDetail(002);
-        assertThat(check.size(), Matchers.equalTo(1));
+        assertThat(check.size(), Matchers.equalTo(2));
         assertEquals(0, check.get(0).getMonthlyExpense().compareTo(new BigDecimal(3000)));
         assertEquals(0, check.get(0).getMonthlyIncome().compareTo(new BigDecimal(50000)));
         assertThat(check.get(0).getMemberno(), Matchers.equalTo(1));

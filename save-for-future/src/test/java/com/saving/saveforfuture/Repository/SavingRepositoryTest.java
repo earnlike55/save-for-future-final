@@ -52,7 +52,7 @@ public class SavingRepositoryTest {
     public void getSavingDetailSuccess()
     {
         List<SavingDetail> savingTest = savingRepository.getSavingDetail(002);
-        assertThat(savingTest.size(), Matchers.equalTo(1));
+        assertThat(savingTest.size(), Matchers.equalTo(2));
         assertEquals(0,savingTest.get(0).getDepositamt().compareTo(new BigDecimal(3000)));
         assertEquals(0,savingTest.get(0).getDateTime().compareTo(Date.valueOf("1999-05-05")));
         assertThat(savingTest.get(0).getSavingId(),Matchers.equalTo(2L));
