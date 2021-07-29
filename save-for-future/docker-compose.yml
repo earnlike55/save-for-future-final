@@ -2,7 +2,7 @@ services:
   app:
     image: 'earnlike55/save-for-future:latest'
     ports:
-    - 8082:8082
+      - 8082:8082
     build:
       context: .
     container_name: app
