@@ -6,5 +6,5 @@ RUN mvn -f /home/app/pom.xml clean install -DskipTests
 FROM openjdk:11
 ADD target/ Save-for-future.jar
 COPY --from=build /home/app/target/Save-for-future.jar /home/Save-for-future.jar
-EXPOSE 8082
+EXPOSE 8084
 ENTRYPOINT ["java","-jar","/home/Save-for-future.jar"]
